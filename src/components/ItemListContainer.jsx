@@ -14,7 +14,7 @@ const ItemListContainer = ({greeting, selectedCategory, productos}) => {
         </Box>
         <SimpleGrid columns={[1, 2, 3]} spacing={4} p={4}>
         {filteredProducts.map((p) => (
-          <Box key={p.id} maxW="md" borderWidth="1px" borderRadius="lg" overflow="hidden" display="flex" flexDirection="column" justifyContent="center">
+          <Box key={p.id} maxW="md" borderWidth="1px" borderRadius="lg" overflow="hidden" boxShadow="md" display="flex" flexDirection="column" justifyContent="center">
               <Image src={p.imagen} alt={p.titulo} boxSize="150px" objectFit="cover" mx="auto" mt={2}/>
 
                 <Box p="2" textAlign="center">
