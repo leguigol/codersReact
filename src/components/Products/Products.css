@@ -1,0 +1,67 @@
+/* Styles for the product card */
+.product-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between; /* Distribuir el espacio entre las tarjetas */
+  }
+  
+  .card {
+    border: 1px solid #ccc;
+    padding: 16px;
+    margin: 16px;
+    width: calc(33.33% - 32px); /* Calcula el ancho para 3 tarjetas en una fila */
+    box-sizing: border-box; /* Asegura que el padding no aumente el ancho total */
+    display: flex;
+    flex-direction: column; /* Alinea los elementos de la tarjeta en columna */
+    justify-content: space-between; /* Distribuye el espacio en la columna */
+    align-items: center; /* Centra los elementos verticalmente */
+  }
+  
+  .card2 {
+
+    padding: 16px;
+    margin: 16px;
+    box-sizing: border-box; /* Asegura que el padding no aumente el ancho total */
+    display: flex;
+    flex-direction: column; /* Alinea los elementos de la tarjeta en columna */
+    justify-content: space-between; /* Distribuye el espacio en la columna */
+    align-items: center; /* Centra los elementos verticalmente */
+  }
+  .card img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 12px;
+    width: 180px; /* Establece el ancho deseado */
+    height: 180px; /* Establece la altura deseada */
+    object-fit: cover; /* Ajusta la imagen para que cubra completamente el contenedor */
+  }
+  
+  .card2 h1 {
+    font-size: 32px;
+    margin-bottom: 8px;
+  }
+  .card h3 {
+    font-size: 16px;
+    margin-bottom: 8px;
+  }
+  
+  .card h4 {
+    font-size: 14px;
+    color: #888;
+  }
+  
+  .card button {
+    background-color: #3498db;
+    color: #fff;
+    padding: 8px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+  }
+
+  .card-footer {
+    text-align: center;
+    margin-top: 12px;
+    font-size: 12px;
+    color: #555;
+  }
