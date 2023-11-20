@@ -3,15 +3,20 @@ import { useContext } from 'react'
 import { dataContext } from '../Context/Datacontext';
 import "./products.css"
 import { useParams, Link} from 'react-router-dom';
-import { Button } from '@chakra-ui/react';
+import { Button, useToast } from '@chakra-ui/react';
 
 const Products = () => {
-
+    const toast = useToast()
     const { data, cart, setCart } = useContext(dataContext);
 
     const buyProducts=(product)=>{
       //console.log(product)
       setCart([...cart,product])
+      toast({
+        title: 'Producto agregado al carrito',
+        status: 'success',
+        isClosable: true,
+      })
     }
 
 
@@ -37,7 +42,10 @@ const Products = () => {
                         Ver detalle del producto
                       </Link>
                 </Button>
-                  <Button colorScheme="teal" variant="outline" mt={1} size="sm" onClick={()=> buyProducts(product)} isDisabled={product.stock===0}>
+                  <Button colorScheme="teal" 
+                    variant="outline" mt={1} size="sm" 
+                    onClick={()=> buyProducts(product)} isDisabled={product.stock===0}
+                    >
                     Comprar
                   </Button>
                   <div className='card-footer'>
