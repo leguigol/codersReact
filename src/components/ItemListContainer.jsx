@@ -42,7 +42,7 @@ const ItemListContainer = () => {
                     {p.titulo}
                   </Box>
                   <Box>
-                    <Text color="gray.500">{`$${p.precio}`}</Text>
+                    <Text color="gray.500">${`${p.precio}`}</Text>
                   </Box>
                   <Button colorScheme="teal" variant="outline" mt={1} size="sm">
                       Ver detalle del producto
