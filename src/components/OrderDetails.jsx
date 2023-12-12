@@ -1,9 +1,9 @@
-// OrderDetails.jsx
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Navigate } from 'react-router-dom';
 import { getDoc, doc } from 'firebase/firestore';
 import { db } from '../firebase/config';
 import { Box, Heading, Text, UnorderedList, ListItem, Image } from '@chakra-ui/react';
+import Swal from 'sweetalert2';
 
 const OrderDetails = () => {
   const { orderid } = useParams();
@@ -19,7 +19,12 @@ const OrderDetails = () => {
           const orderData = orderSnapshot.data();
           setOrderDetails(orderData);
         } else {
-          console.error('La orden no existe');
+          Swal.fire({
+            title: 'Error!',
+            text: 'Esa orden no existe !',
+            icon: 'error',
+            confirmButtonText: 'Aceptar'
+          })
         }
       } catch (error) {
         console.error('Error al recuperar los detalles de la orden:', error.message);

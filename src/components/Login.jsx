@@ -31,9 +31,9 @@ const Login = () => {
             <div style={{ margin: 0, padding: 0 }}>
               <NavBar />
               <Box p={4}>
-                <Input type="email" placeholder="Correo electrónico" mb={2} onChange={(e) => setEmail(e.target.value)} />
+                {/* <Input type="email" placeholder="Correo electrónico" mb={2} onChange={(e) => setEmail(e.target.value)} />
                 <Input type="password" placeholder="Contraseña" mb={2} onChange={(e) => setPassword(e.target.value)} />
-                  {error && <Text color="red.500" mb={2}>{error}</Text>}
+                  {error && <Text color="red.500" mb={2}>{error}</Text>} */}
                 <Button colorScheme="teal" onClick={handleLogin}>Iniciar sesión con Google</Button>
               </Box>
             </div> 

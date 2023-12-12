@@ -10,7 +10,6 @@ const Products = () => {
     const { data, cart, setCart,loading } = useContext(dataContext);
 
     const buyProducts=(product)=>{
-      //console.log(product)
       setCart([...cart,product])
       toast({
         title: 'Producto agregado al carrito',
@@ -19,11 +18,10 @@ const Products = () => {
       })
     }
 
-
     const { categoria } = useParams()
 
-    console.log('categoria:'+categoria)
-    console.log('data:'+data)
+    // console.log('categoria:'+categoria)
+    // console.log('data:'+data)
 
     let filterProducts;
 
@@ -32,7 +30,8 @@ const Products = () => {
     }else{
       filterProducts=data.filter((p)=> p.categoria_id===parseInt(categoria));
     }
-    console.log("Filtered Products:", filterProducts);
+    // console.log("Filtered Products:", filterProducts);
+    // console.log("loading"+loading)
         return (
           <div className='product-container'>
             {loading ? (
@@ -48,13 +47,7 @@ const Products = () => {
                           Ver detalle del producto
                         </Link>
                   </Button>
-                    {/* <Button colorScheme="teal" 
-                      variant="outline" mt={1} size="sm" 
-                      onClick={()=> buyProducts(product)} isDisabled={product.stock===0}
-                      >
-                      Comprar
-                    </Button> */}
-                    <div className='card-footer'>Stock: {product.stock}</div>          
+                  <div className='card-footer'>Stock: {product.stock}</div>          
               </div>
             ))
           )}

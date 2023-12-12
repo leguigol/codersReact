@@ -26,20 +26,17 @@ const ProductDetail = ({titulo}) => {
     }
 
     useEffect(() => {
-      // Buscar el producto en el contexto según el ID
       const productInContext = data.find((item) => item.id === id);
   
       if (productInContext) {
         setProduct(productInContext);
   
-        // Establecer la cantidad inicial como el valor del stock del producto
         setCantidad(1);
       } else {
         console.log('No se encontró el producto en el contexto');
       }
     }, [data, id]);
 
-//    console.log(data)
     console.log(id)
 
     const buyProducts=(product,cant)=>{
