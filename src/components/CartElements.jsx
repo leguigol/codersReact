@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useContext } from 'react'
 import { dataContext } from './Context/Datacontext'
 import { Text, Box, SimpleGrid, Flex, Image, Badge, Button } from '@chakra-ui/react'
@@ -6,7 +6,7 @@ import { Text, Box, SimpleGrid, Flex, Image, Badge, Button } from '@chakra-ui/re
 const CartElements = () => {
 
         const { data, cart, setCart } = useContext(dataContext);
-        console.log('cart:'+cart)
+
         const removeFromCart=(productId)=>{
             setCart(cart.filter((product)=>product.id !==productId))
         }

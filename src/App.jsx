@@ -5,6 +5,7 @@ import CartContent from './components/CartContent'
 import DataProvider from './components/Context/Datacontext'
 import ProductDetail from './components/Products/ProductDetail'
 import Login from './components/Login'
+import OrderDetails from './components/OrderDetails'
 
 const App = () => {
 
@@ -17,6 +18,7 @@ const App = () => {
             <Route exact path='/cart' element={<CartContent />} />
             <Route exact path='/productDetail/:id' element={<ProductDetail />} />
             <Route exact path='/login' element={<Login />} />
+            <Route exact path='/orders/:orderid' element={<OrderDetails />} />
           </Routes>
         </DataProvider>
       </BrowserRouter>
