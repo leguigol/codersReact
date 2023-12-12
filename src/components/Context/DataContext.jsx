@@ -13,8 +13,7 @@ export const DataProvider=({children})=>{
     const [data, setData]=useState([]);
     const [cart, setCart]=useState(savedCart)
     const [user, setUser] = useState(null);
-    
-
+    const [loading, setLoading] = useState(true);
 
     useEffect(()=>{
         localStorage.setItem("cart",JSON.stringify(cart))
@@ -36,12 +35,13 @@ export const DataProvider=({children})=>{
             const docs=snapshot.docs.map((doc)=>doc.data())
             setData(docs)
         })
-
+        
+        setLoading(false);
         return () => unsubscribe();
 
     },[])
 
-    return <dataContext.Provider value={{ data, setData,cart, setCart, user, setUser }}>{children}</dataContext.Provider>
+    return <dataContext.Provider value={{ data, setData,cart, setCart, user, setUser, loading }}>{children}</dataContext.Provider>
 }
 
 export default DataProvider
