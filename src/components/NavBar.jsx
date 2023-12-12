@@ -1,9 +1,34 @@
-import React from 'react'
+import {React,useState,useEffect} from 'react'
 import CardWidget from './CardWidget'
 import { Flex, Spacer, Box, Image, Text, Menu,MenuItem,MenuButton,MenuList, Button } from '@chakra-ui/react'
 import { Link } from 'react-router-dom'
+import { collection, getDocs, getFirestore } from 'firebase/firestore';
+import useAuth from '../hooks/auth';
 
 const NavBar = () => {
+
+  const [categorias, setCategorias] = useState([]);
+  const { user, logout } = useAuth();
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      const db = getFirestore();
+      const categoriasCollection = collection(db, 'categorias');
+
+      try {
+        const categoriasSnapshot = await getDocs(categoriasCollection);
+        const categoriasData = categoriasSnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setCategorias(categoriasData);
+      } catch (error) {
+        console.error('Error al obtener categorías:', error);
+      }
+    };
+
+    fetchCategories();
+  }, []);
 
 
   return (
@@ -27,21 +52,16 @@ const NavBar = () => {
                 <Text fontSize='2xl'>Categoria de Producto</Text>
               </MenuButton>
               <MenuList>
-                <Link to={"/categoria/1"}>
+                <Link to={"/"}>
                   <MenuItem>
-                      Discos
+                      Todos
                   </MenuItem>
                 </Link>
-                <Link to={"/categoria/2"}>
-                  <MenuItem>
-                    Merchandising
-                  </MenuItem>
+                {categorias.map((categoria) => (
+                <Link key={categoria.id} to={`/categoria/${categoria.id}`}>
+                  <MenuItem>{categoria.categoria}</MenuItem>
                 </Link>
-                <Link to={"/categoria/3"}>
-                  <MenuItem>
-                      Ropa
-                  </MenuItem>
-                </Link>
+                ))}
               </MenuList>
             </Menu>        
           </Box>
@@ -50,6 +70,13 @@ const NavBar = () => {
             <Link to={"/cart"}>
               <CardWidget />
             </Link>
+            <div>
+              {user ? (
+                 <span>Comprar como: {user.displayName} | <button onClick={logout}>Cerrar sesión</button></span>
+              ) : (
+                    <span><Link to="/login">Iniciar sesión</Link></span>
+                  )}
+            </div>
           </Box>
         </Flex>
 

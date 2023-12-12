@@ -6,28 +6,36 @@ import { Text, Box, SimpleGrid, Flex, Image, Badge, Button } from '@chakra-ui/re
 const CartElements = () => {
 
         const { data, cart, setCart } = useContext(dataContext);
+        console.log('cart:'+cart)
         const removeFromCart=(productId)=>{
             setCart(cart.filter((product)=>product.id !==productId))
         }
  
         return (
-            <SimpleGrid columns={{ sm: 1, md: 2, lg: 3 }} spacing={4}>
+            <SimpleGrid columns={{ sm: 1, md: 1, lg: 2 }} spacing={4}>
 
-              {cart.map((product) => (
-                <Box key={product.id} borderWidth="1px" borderRadius="lg" overflow="hidden" display="flex" justifyContent="center">
+              {cart.map((product, index) => (
+                <Box key={product.id || index} borderWidth="1px" borderRadius="lg" overflow="hidden" display="flex" justifyContent="center">
                   <Image src={product.imagen} alt={product.titulo} boxSize="180px"/>
                   <Box p="4">
-                    <Text fontSize="xl" fontWeight="semibold" mb="2">
+                    <Text fontSize="l" fontWeight="semibold" mb="2">
                       {product.titulo}
                     </Text>
+                    <Text fontSize="l" color="teal.500">
+                      Valor Unitario: $ {product.precio}
+                    </Text>
                     <Text fontSize="lg" color="teal.500">
-                      {product.precio}
+                      Cantidad: {product.cantidad}
+                    </Text>
+                    <Text fontSize="lg" color="teal.500">
+                      Total $: {product.precio*product.cantidad}
                     </Text>
                     <Button mt="4" colorScheme="teal" variant="outline" size="sm" onClick={()=> removeFromCart(product.id)}>
                       Retirar del carrito
                     </Button>
                   </Box>
                 </Box>
+              
               ))}
             </SimpleGrid>
           );

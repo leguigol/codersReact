@@ -1,19 +1,32 @@
 import React from 'react'
 import { useContext } from 'react'
 import { dataContext } from './Context/Datacontext'
-import { Center } from '@chakra-ui/react'
+import { Box, Button, Text, Center } from '@chakra-ui/react';
+
 const CartTotal = () => {
-    const { cart } =useContext(dataContext)
+    const { cart,user } =useContext(dataContext)
 
-    const total=cart.reduce((acu,ele)=> acu+ele.precio,0)
-    
+    const total=cart.reduce((acu,ele)=> acu+ele.precio*ele.cantidad,0)
+
+    const handleCheckout = () => {
+      // Lógica para procesar la finalización de la compra
+      // Esto podría incluir redireccionar a una página de pago, enviar la información al servidor, etc.
+      console.log('Procesando la finalización de la compra...');
+    };
   return (
-    <div>
-        <Center bg='purple' h='60px' color='white' mt={2}>
-            Total a pagar: $ {total}
-        </Center>
+    <Box>
+      <Center bg='purple' h='60px' color='white' mt={2} mb={4}>
+        Total a pagar: $ {total}
+      </Center>
 
-    </div>
+      {user && (
+        <Center>
+          <Button colorScheme="teal" onClick={handleCheckout}>
+            Finalizar Compra
+          </Button>
+        </Center>
+      )}
+    </Box>
   )
 }
 

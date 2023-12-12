@@ -14,7 +14,7 @@ const CardWidget = () => {
           <Box ml='3' bg='white'>
             <Text fontWeight='bold'>
               <Badge ml='1' colorScheme='green'>
-                  {cart.length }
+              {cart.reduce((total, product) => total + product.cantidad, 0)}
               </Badge>
             </Text>
             <Text fontSize='sm'>Articulos</Text>
