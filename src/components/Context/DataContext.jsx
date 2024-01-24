@@ -1,6 +1,6 @@
 import { createContext, useState, useEffect } from "react";
 //import axios from "axios";
-import { auth } from '../../firebase2';
+import { auth } from "../../firebase/config";
 import { onAuthStateChanged } from 'firebase/auth';
 import { collection, getDocs, getFirestore } from 'firebase/firestore'
 
@@ -33,15 +33,14 @@ export const DataProvider=({children})=>{
 
         getDocs(itemsCollection).then((snapshot)=>{
             const docs=snapshot.docs.map((doc)=>doc.data())
-            setData(docs)
+            setData(docs);
         })
         
-        setLoading(false);
         return () => unsubscribe();
 
     },[])
 
-    return <dataContext.Provider value={{ data, setData,cart, setCart, user, setUser, loading }}>{children}</dataContext.Provider>
+    return <dataContext.Provider value={{ data, setData,cart, setCart, user, setUser, loading, setLoading }}>{children}</dataContext.Provider>
 }
 
 export default DataProvider

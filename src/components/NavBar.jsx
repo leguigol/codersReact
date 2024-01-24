@@ -1,5 +1,5 @@
 import {React,useState,useEffect} from 'react'
-import CardWidget from './CardWidget'
+import CardWidget from './CartWidget'
 import { Flex, Spacer, Box, Image, Text, Menu,MenuItem,MenuButton,MenuList, Button } from '@chakra-ui/react'
 import { Link } from 'react-router-dom'
 import { collection, getDocs, getFirestore } from 'firebase/firestore';

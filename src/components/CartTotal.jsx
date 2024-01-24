@@ -1,5 +1,6 @@
 import React from 'react'
 import { useContext,useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 import { dataContext } from './Context/Datacontext'
 import { Box, Button, Center, Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalCloseButton, useDisclosure } from '@chakra-ui/react';
 import { addDoc,collection} from 'firebase/firestore';
@@ -7,10 +8,11 @@ import { db } from '../firebase/config';
 import { serverTimestamp } from "firebase/firestore";
 
 const CartTotal = () => {
-    const { cart,user } =useContext(dataContext)
+    const { cart,setCart,user } =useContext(dataContext)
     const [orderId, setOrderId] = useState(null);
     const { isOpen, onOpen, onClose } = useDisclosure();
 
+    const navigate = useNavigate();
     const total=cart.reduce((acu,ele)=> acu+ele.precio*ele.cantidad,0)
 
     const handleCheckout = async() => {
@@ -37,20 +39,32 @@ const CartTotal = () => {
 
         setOrderId(newOrderId);
         onOpen();
-
       }catch(error){
         console.error('Error al procesar la compra:', error.message);
       }
     };
+    
+    const handleCloseModal = () => {
+      onClose();
+      setCart([]);
+      navigate('/');
+    };
 
+    const handleClearCart = () => {
+      setCart([]); 
+    };
+  
   return (
     <Box>
       <Center bg='purple' h='60px' color='white' mt={2} mb={4}>
         Total a pagar: $ {total}
       </Center>
-
-      {user && (
+      {console.log('largo: ',cart.length)}
+      {(cart.length && user) && (
         <Center>
+          <Button colorScheme="red" onClick={handleClearCart} mr={4}>
+            Vaciar Carrito
+          </Button>
           <Button colorScheme="teal" onClick={handleCheckout}>
             Realizar Compra
           </Button>
@@ -58,7 +72,7 @@ const CartTotal = () => {
       )}
 
       {/* Modal */}
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal isOpen={isOpen} onClose={handleCloseModal}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Compra exitosa</ModalHeader>

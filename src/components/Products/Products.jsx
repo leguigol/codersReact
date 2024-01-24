@@ -1,13 +1,15 @@
 import React from 'react'
-import { useContext } from 'react'
+import { useContext,useEffect,useState } from 'react'
 import { dataContext } from '../Context/Datacontext';
 import "./products.css"
 import { useParams, Link} from 'react-router-dom';
-import { Button, Spinner, useToast } from '@chakra-ui/react';
+import { Button, Spinner, useToast, Center, Text, Flex } from '@chakra-ui/react';
+import { collection, getFirestore,getDocs } from 'firebase/firestore';
 
 const Products = () => {
     const toast = useToast()
-    const { data, cart, setCart,loading } = useContext(dataContext);
+    const [productos,setProductos]=useState([]);
+    const { cart, setCart, loading,setLoading } = useContext(dataContext);
 
     const buyProducts=(product)=>{
       setCart([...cart,product])
@@ -20,22 +22,48 @@ const Products = () => {
 
     const { categoria } = useParams()
 
-    // console.log('categoria:'+categoria)
-    // console.log('data:'+data)
+    useEffect(() => {
+      const fetchProducts = async () => {
+        setLoading(true);
+        const db = getFirestore();
+        const itemsCollection = collection(db, 'items');
+        try {
+          const snapshot = await getDocs(itemsCollection);
+          const productsData = snapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+          }));
+          setProductos(productsData);
+        } catch (error) {
+          console.error('Error fetching products:', error);
+        } finally {
+          setLoading(false);
+        }
+      };
+    
+      fetchProducts();
+
+    },[]);  
 
     let filterProducts;
 
     if(categoria===undefined){
-      filterProducts=data;
+      filterProducts=productos;
     }else{
-      filterProducts=data.filter((p)=> p.categoria_id===parseInt(categoria));
+      filterProducts=productos.filter((p)=> p.categoria_id===parseInt(categoria));
     }
-    // console.log("Filtered Products:", filterProducts);
-    // console.log("loading"+loading)
+
         return (
           <div className='product-container'>
             {loading ? (
-              <Spinner size='xl' />
+              <Center height="200px" spacing={2}>
+                <Flex flexDirection="column" alignItems="center">
+                  <Spinner size="lg" color="teal" />
+                  <Text mt={4} fontSize="lg" fontWeight="medium">
+                    Loading...
+                  </Text>
+                </Flex>
+              </Center>
             ) : (  
               filterProducts.map((product)=>(
               <div className='card' key={product.id}>
@@ -55,4 +83,4 @@ const Products = () => {
         )
 }
 
-export default Products
+export default Products;

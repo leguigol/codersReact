@@ -37,7 +37,7 @@ const ProductDetail = ({titulo}) => {
       }
     }, [data, id]);
 
-    console.log(id)
+    //console.log(id)
 
     const buyProducts=(product,cant)=>{
       console.log(product)
