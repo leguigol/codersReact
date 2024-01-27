@@ -1,13 +1,15 @@
 import React from 'react'
 import { useContext,useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-import { dataContext } from './Context/Datacontext'
+import { dataContext } from '../context/SCartContext';
 import { Box, Button, Center, Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalCloseButton, useDisclosure } from '@chakra-ui/react';
-import { addDoc,collection} from 'firebase/firestore';
-import { db } from '../firebase/config';
+import { addDoc,collection, getFirestore } from 'firebase/firestore';
 import { serverTimestamp } from "firebase/firestore";
 
 const CartTotal = () => {
+
+    const db=getFirestore();
+
     const { cart,setCart,user } =useContext(dataContext)
     const [orderId, setOrderId] = useState(null);
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -33,7 +35,6 @@ const CartTotal = () => {
           fecha: serverTimestamp(),
         }
 
-        console.log(orderData)
         const newOrderRef = await addDoc(ordersCollectionRef, orderData);
         const newOrderId = newOrderRef.id;
 

@@ -1,11 +1,12 @@
 import React from 'react'
-import Home from './components/Home'
 import { BrowserRouter,Routes,Route } from 'react-router-dom'
 import CartContent from './components/CartContent'
-import DataProvider from './components/Context/Datacontext'
-import ProductDetail from './components/Products/ProductDetail'
-import Login from './components/Login'
+// import Login from './components/Login'
 import OrderDetails from './components/OrderDetails'
+import ItemListContainer from './components/ItemListContainer'
+import ItemDetailContainer from './components/ItemDetailContainer' 
+import DataProvider from './context/SCartContext'
+import './assets/css/estilos.css'
 
 const App = () => {
 
@@ -13,11 +14,11 @@ const App = () => {
       <BrowserRouter>
         <DataProvider>
           <Routes>
-            <Route exact path='/' element={<Home/>} />
-            <Route exact path='/categoria/:categoria' element={<Home/>} />
+            <Route exact path='/' element={<ItemListContainer />} />
+            <Route exact path='/categoria/:catId' element={<ItemListContainer />} />
             <Route exact path='/cart' element={<CartContent />} />
-            <Route exact path='/productDetail/:id' element={<ProductDetail />} />
-            <Route exact path='/login' element={<Login />} />
+            <Route path="/item/:itemId" element={<ItemDetailContainer />} />
+            {/* <Route exact path='/login' element={<Login />} /> */}
             <Route exact path='/orders/:orderid' element={<OrderDetails />} />
           </Routes>
         </DataProvider>

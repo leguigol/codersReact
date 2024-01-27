@@ -1,5 +1,4 @@
 import React from 'react'
-import Home from './Home'
 import { Button, Center } from '@chakra-ui/react'
 import { Link } from 'react-router-dom';
 

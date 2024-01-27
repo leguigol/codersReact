@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Navigate } from 'react-router-dom';
-import { getDoc, doc } from 'firebase/firestore';
-import { db } from '../firebase/config';
+import { getDoc, doc, getFirestore } from 'firebase/firestore';
+// import { db } from '../firebase/config';
 import { Box, Heading, Text, UnorderedList, ListItem, Image } from '@chakra-ui/react';
 import Swal from 'sweetalert2';
+// import { db } from 'firebase/firestore'
 
 const OrderDetails = () => {
   const { orderid } = useParams();
   const [orderDetails, setOrderDetails] = useState(null);
+
+  const db=getFirestore();
 
   useEffect(() => {
     const fetchOrderDetails = async () => {

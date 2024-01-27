@@ -1,7 +1,7 @@
 import { Badge, Flex, Avatar,Box, Text } from '@chakra-ui/react'
 import React from 'react'
 import { useContext } from 'react'
-import { dataContext } from './Context/Datacontext'
+import { dataContext } from '../context/SCartContext'
 
 const CardWidget = () => {
 

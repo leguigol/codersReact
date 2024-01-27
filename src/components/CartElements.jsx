@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useContext } from 'react'
-import { dataContext } from './Context/Datacontext'
-import { Text, Box, SimpleGrid, Flex, Image, Badge, Button } from '@chakra-ui/react'
+import { dataContext } from '../context/SCartContext'
+import { Text, Box, SimpleGrid, Image, Button } from '@chakra-ui/react'
 
 const CartElements = () => {
 

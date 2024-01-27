@@ -2,7 +2,7 @@ import CartElements from './CartElements'
 import CartTotal from './CartTotal'
 import NavBar from './NavBar'
 import { useContext } from 'react'
-import { dataContext } from './Context/Datacontext'
+import { dataContext } from '../context/SCartContext'
 import EmptyCart from './EmptyCart'
 import { Box  } from '@chakra-ui/react'
 

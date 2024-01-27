@@ -1,14 +1,15 @@
-import {React,useState,useEffect} from 'react'
+import {React,useState,useEffect, useContext} from 'react'
 import CardWidget from './CartWidget'
 import { Flex, Spacer, Box, Image, Text, Menu,MenuItem,MenuButton,MenuList, Button } from '@chakra-ui/react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { collection, getDocs, getFirestore } from 'firebase/firestore';
-import useAuth from '../hooks/auth';
+import { dataContext } from '../context/SCartContext';
+import LoginStatus from './LoginStatus';
 
 const NavBar = () => {
 
   const [categorias, setCategorias] = useState([]);
-  const { user, logout } = useAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -33,7 +34,8 @@ const NavBar = () => {
 
   return (
     <div>
-
+        <LoginStatus m={1}/>
+        <Spacer />
         <Flex bg='white' m={0} p={0}>
           <Link to="/">
             <Box p={2}>
@@ -70,13 +72,6 @@ const NavBar = () => {
             <Link to={"/cart"}>
               <CardWidget />
             </Link>
-            <div>
-              {user ? (
-                 <span>Comprar como: {user.displayName} | <button onClick={logout}>Cerrar sesión</button></span>
-              ) : (
-                    <span><Link to="/login">Iniciar sesión</Link></span>
-                  )}
-            </div>
           </Box>
         </Flex>
 
