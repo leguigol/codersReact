@@ -1,13 +1,37 @@
-De acuerdo al pedido del profesor se modifica la forma de consumo de firebase, realizandola en el useEffect tal cual se vio en clases.
-Se agrega un boton vaciar carrito.
-Entiendo que el nombre de los componentes es por convencion, pero como en la rubrica dice "piezas sugeridas" no pense que era obligatorio.
-En vez de itemContainer, itemList, item, y itemDetail lo tengo todo agrupado en Products y ProductDetail.
-Si la nomenclatura la respete en la parte del carrito, CartContent, CartWidget,CartElements, CartTotal y EmptyCart.
-Las rutas estan segun lo solicitado como asi tambien el flow de la aplicacion.
-Espero haber cumplido lo pedido.
-saludos cordiales.
+# PROYECTO FINAL CURSO REACT E-COMMERCE
+# ALUMNO SERGIO LEGUIZAMON
 
-Sergio Leguizamon
+Este proyecto es una aplicación de comercio electrónico construida con React. Permite a los usuarios ver productos, agregarlos al carrito, ajustar cantidades y completar la compra mediante un formulario de contacto.
 
+## Características
+
+- Catálogo de productos
+- Carrito de compras
+- Modificación de cantidades en el carrito
+- Formulario de contacto y envío de información a la Base de Datos
+
+## Instalación
+
+1. Clonar el repositorio: `git clone https://github.com/leguigol/codersReact.git`
+2. Instala las dependencias: `cd codersReact && npm install`
+
+## Uso
+
+1. Iniciar la aplicación: `npm start`
+2. Abrir navegador y visitar `http://localhost:5173`
+
+## Estructura del Proyecto
+
+- `/src`: Contiene el código fuente de la aplicación.
+  - `/components`: Componentes de React.
+  - `/context`: Contexto de la aplicación.
+  - `/pages`: Contiene el home de la app.
+  - `/assets/css`: Estilos de la aplicación.
+
+
+## Tecnologías Utilizadas
+
+- React
+- Chakra UI 
 
 

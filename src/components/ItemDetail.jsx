@@ -22,7 +22,17 @@ const ItemDetail = ({items}) => {
       }
 
       const buyProducts=(product,cant)=>{
-        setCart([...cart,{...product,cantidad: cant}])
+        const existingProductIndex = cart.findIndex((item) => item.id === product.id);
+
+        if (existingProductIndex !== -1) {
+            // El producto ya está en el carrito, actualiza la cantidad
+            const updatedCart = [...cart];
+            updatedCart[existingProductIndex].cantidad += cant;
+    
+            setCart(updatedCart);
+        }else{
+            setCart([...cart,{...product,cantidad: cant}])
+        }    
         toast({
           title: 'Producto agregado al carrito',
           status: 'success',

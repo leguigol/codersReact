@@ -5,10 +5,12 @@ import { useContext } from 'react'
 import { dataContext } from '../context/SCartContext'
 import EmptyCart from './EmptyCart'
 import { Box  } from '@chakra-ui/react'
+import Checkout from './Checkout'
 
 const CartContent = () => {
 
-  const { cart } = useContext(dataContext)
+  const { cart,wasBuying } = useContext(dataContext)
+
 
   return cart.length > 0 ? (
   <div>
@@ -16,8 +18,19 @@ const CartContent = () => {
           <Box width="75%" bg="purple.50" >
             <div style={{ margin: 0, padding: 0 }}>
               <NavBar />
-              <CartElements />
-              <CartTotal />
+              {
+                !wasBuying ? 
+                (
+                  <>
+                  <CartElements />
+                  <CartTotal />
+                  </>
+                ) : (
+                  <>
+                  <Checkout />                  
+                  </>
+                )
+              }
             </div>
           </Box> 
         </Box>   

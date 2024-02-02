@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useContext } from 'react'
 import { dataContext } from '../context/SCartContext'
 import { Text, Box, SimpleGrid, Image, Button } from '@chakra-ui/react'

@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useContext,useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { dataContext } from '../context/SCartContext';
-import { Box, Button, Center, FormControl, FormLabel, Input, Text, SimpleGrid } from '@chakra-ui/react';
+import { Box, Button, Center, FormControl, FormLabel, Input, Text} from '@chakra-ui/react';
 import { addDoc,collection, getFirestore } from 'firebase/firestore';
 import { serverTimestamp } from "firebase/firestore";
 
@@ -10,10 +10,8 @@ const CartTotal = () => {
 
     const db=getFirestore();
 
-    const { cart,setCart,user } =useContext(dataContext)
-    const [orderId, setOrderId] = useState(null);
-    // const { isOpen, onOpen, onClose } = useDisclosure();
-    const [showForm, setShowForm] = useState(false);
+    const { cart,setCart,user,wasBuying, setWasBuying,orderId,setOrderId } =useContext(dataContext)
+    const [email, setEmail]=useState('');
 
     const navigate = useNavigate();
     const total=cart.reduce((acu,ele)=> acu+ele.precio*ele.cantidad,0)
@@ -40,34 +38,31 @@ const CartTotal = () => {
         const newOrderId = newOrderRef.id;
 
         setOrderId(newOrderId);
-        setShowForm(true);
+        setEmail(orderData.userId);
+        setWasBuying(true);
+        
       }catch(error){
         console.error('Error al procesar la compra:', error.message);
       }
     };
     
-    const handleCloseModal = () => {
-      onClose();
-      setCart([]);
-      navigate('/');
-    };
+    useEffect(()=>{
+      if(user){
+        setEmail(user.email);
+      }else{
+        setEmail('');
+      }  
+    },[user]);
 
     const handleClearCart = () => {
       setCart([]); 
     };
-  
-    const handleCloseForm = () => {
-      setShowForm(false);
-      setCart([]);
-      navigate('/');
-    };
-  
+    
   return (
     <Box>
       <Center bg='purple' h='60px' color='white' mt={2} mb={4}>
         Total a pagar: $ {total}
       </Center>
-      {console.log('largo: ',cart.length)}
       {(cart.length && user) && (
         <Center>
           <Button colorScheme="red" onClick={handleClearCart} mr={4}>
@@ -75,20 +70,9 @@ const CartTotal = () => {
           </Button>
         </Center>
       )}
-
-      {/* Modal */}
-      {/* <Modal isOpen={isOpen} onClose={handleCloseModal}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Compra exitosa</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <p>ID de orden: {orderId}</p>
-          </ModalBody>
-        </ModalContent>
-      </Modal> */}
-      {showForm && (
-        <Box borderWidth="1px" borderRadius="lg" p="4">
+      {
+        user && (
+          <Box borderWidth="1px" borderRadius="lg" p="4" m="4">
           <Text mb={4} fontSize="lg" fontWeight="bold">
             Formulario de Contacto
           </Text>
@@ -98,27 +82,15 @@ const CartTotal = () => {
           </FormControl>
           <FormControl mt={4}>
             <FormLabel>Email:</FormLabel>
-            <Input type="email" name="email" />
+            <Input type="email" name="email" defaultValue={email}/>
           </FormControl>
-          {/* Agrega más campos según tus necesidades */}
-          <Button colorScheme="teal" onClick={handleCheckout}>
+          <Button colorScheme="teal" onClick={handleCheckout} p="2" mt="2">
             Realizar Compra
           </Button>
-
-          {/* <Button mt={4} colorScheme="teal" onClick={handleCloseForm}>
-            Enviar Formulario
-          </Button> */}
         </Box>
-      )}
+        )
+      }
 
-      {orderId && (
-        <Box borderWidth="1px" borderRadius="lg" p="4">
-          <Text fontSize="lg" fontWeight="bold" mb={4}>
-            Compra exitosa
-          </Text>
-          <p>ID de orden: {orderId}</p>
-        </Box>
-      )}
     </Box>
   )
 }

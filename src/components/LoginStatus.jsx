@@ -3,7 +3,7 @@ import React, { useContext } from 'react';
 import { Box, Button,Spacer } from '@chakra-ui/react';
 import { dataContext } from '../context/SCartContext';
 import { getAuth, signInWithPopup, GoogleAuthProvider,signOut} from 'firebase/auth';
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 const LoginStatus = () => {
   
