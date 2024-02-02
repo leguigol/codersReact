@@ -14,7 +14,6 @@ const LoginStatus = () => {
   const handleLogin = async () => {
     try {
       const provider = new GoogleAuthProvider();
-      const auth=getAuth();
       await signInWithPopup(auth, provider);
       setUser(auth.currentUser);
       navigate('/');

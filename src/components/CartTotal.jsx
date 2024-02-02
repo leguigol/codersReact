@@ -2,7 +2,7 @@ import React from 'react'
 import { useContext,useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { dataContext } from '../context/SCartContext';
-import { Box, Button, Center, Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalCloseButton, useDisclosure } from '@chakra-ui/react';
+import { Box, Button, Center, FormControl, FormLabel, Input, Text, SimpleGrid } from '@chakra-ui/react';
 import { addDoc,collection, getFirestore } from 'firebase/firestore';
 import { serverTimestamp } from "firebase/firestore";
 
@@ -12,7 +12,8 @@ const CartTotal = () => {
 
     const { cart,setCart,user } =useContext(dataContext)
     const [orderId, setOrderId] = useState(null);
-    const { isOpen, onOpen, onClose } = useDisclosure();
+    // const { isOpen, onOpen, onClose } = useDisclosure();
+    const [showForm, setShowForm] = useState(false);
 
     const navigate = useNavigate();
     const total=cart.reduce((acu,ele)=> acu+ele.precio*ele.cantidad,0)
@@ -39,7 +40,7 @@ const CartTotal = () => {
         const newOrderId = newOrderRef.id;
 
         setOrderId(newOrderId);
-        onOpen();
+        setShowForm(true);
       }catch(error){
         console.error('Error al procesar la compra:', error.message);
       }
@@ -55,6 +56,12 @@ const CartTotal = () => {
       setCart([]); 
     };
   
+    const handleCloseForm = () => {
+      setShowForm(false);
+      setCart([]);
+      navigate('/');
+    };
+  
   return (
     <Box>
       <Center bg='purple' h='60px' color='white' mt={2} mb={4}>
@@ -66,14 +73,11 @@ const CartTotal = () => {
           <Button colorScheme="red" onClick={handleClearCart} mr={4}>
             Vaciar Carrito
           </Button>
-          <Button colorScheme="teal" onClick={handleCheckout}>
-            Realizar Compra
-          </Button>
         </Center>
       )}
 
       {/* Modal */}
-      <Modal isOpen={isOpen} onClose={handleCloseModal}>
+      {/* <Modal isOpen={isOpen} onClose={handleCloseModal}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Compra exitosa</ModalHeader>
@@ -82,8 +86,39 @@ const CartTotal = () => {
             <p>ID de orden: {orderId}</p>
           </ModalBody>
         </ModalContent>
-      </Modal>
+      </Modal> */}
+      {showForm && (
+        <Box borderWidth="1px" borderRadius="lg" p="4">
+          <Text mb={4} fontSize="lg" fontWeight="bold">
+            Formulario de Contacto
+          </Text>
+          <FormControl>
+            <FormLabel>Nombre:</FormLabel>
+            <Input type="text" name="name" />
+          </FormControl>
+          <FormControl mt={4}>
+            <FormLabel>Email:</FormLabel>
+            <Input type="email" name="email" />
+          </FormControl>
+          {/* Agrega más campos según tus necesidades */}
+          <Button colorScheme="teal" onClick={handleCheckout}>
+            Realizar Compra
+          </Button>
 
+          {/* <Button mt={4} colorScheme="teal" onClick={handleCloseForm}>
+            Enviar Formulario
+          </Button> */}
+        </Box>
+      )}
+
+      {orderId && (
+        <Box borderWidth="1px" borderRadius="lg" p="4">
+          <Text fontSize="lg" fontWeight="bold" mb={4}>
+            Compra exitosa
+          </Text>
+          <p>ID de orden: {orderId}</p>
+        </Box>
+      )}
     </Box>
   )
 }

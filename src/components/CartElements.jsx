@@ -3,6 +3,7 @@ import { useContext } from 'react'
 import { dataContext } from '../context/SCartContext'
 import { Text, Box, SimpleGrid, Image, Button } from '@chakra-ui/react'
 
+
 const CartElements = () => {
 
         const { data, cart, setCart } = useContext(dataContext);
@@ -11,6 +12,25 @@ const CartElements = () => {
             setCart(cart.filter((product)=>product.id !==productId))
         }
  
+        const incrementar = (productId) => {
+          updateQuantity(productId, cart.find((product) => product.id === productId).cantidad + 1);
+        };
+      
+        const decrementar = (productId) => {
+          updateQuantity(productId, cart.find((product) => product.id === productId).cantidad - 1);
+        };
+
+        const updateQuantity = (productId, newQuantity) => {
+          const updatedCart = cart.map((product) => {
+            if (product.id === productId) {
+              return { ...product, cantidad: newQuantity };
+            }
+            return product;
+          });
+      
+          setCart(updatedCart);
+        };
+      
         return (
             <SimpleGrid columns={{ sm: 1, md: 1, lg: 2 }} spacing={4}>
 
@@ -24,9 +44,23 @@ const CartElements = () => {
                     <Text fontSize="l" color="teal.500">
                       Valor Unitario: $ {product.precio}
                     </Text>
-                    <Text fontSize="lg" color="teal.500">
+                    <Box mt={4} display="flex" justifyContent="center" alignItems="center">
+                      <Button onClick={() => decrementar(product.id)} variant="outline" size="sm" isDisabled={product.cantidad<2}>
+                         -
+                      </Button>
+                      <Text mx={4}>{product.cantidad}</Text>
+                    <Button
+                      onClick={() => incrementar(product.id)}
+                      variant="outline"
+                      size="sm"
+                      isDisabled={product.cantidad > product.stock - 1}
+              >
+                +
+              </Button>
+            </Box>                    
+                    {/* <Text fontSize="lg" color="teal.500">
                       Cantidad: {product.cantidad}
-                    </Text>
+                    </Text> */}
                     <Text fontSize="lg" color="teal.500">
                       Total $: {product.precio*product.cantidad}
                     </Text>

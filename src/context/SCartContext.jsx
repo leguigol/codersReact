@@ -14,7 +14,6 @@ export const DataProvider=({children})=>{
         localStorage.setItem("cart",JSON.stringify(cart))
     },[cart])
 
-
     return <dataContext.Provider value={{ data, setData,cart, setCart, user, setUser, loading, setLoading }}>{children}</dataContext.Provider>
 }
 
